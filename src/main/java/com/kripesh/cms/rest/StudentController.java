@@ -2,46 +2,48 @@ package com.kripesh.cms.rest;
 
 import com.kripesh.cms.dao.StudentRepository;
 import com.kripesh.cms.entity.Student;
+import com.kripesh.cms.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/students")
 public class StudentController {
 
     @Autowired
-    StudentRepository repository;
+    private StudentService studentService;
 
-    @GetMapping("/students")
-    public Iterable<Student> getAllStudents() {
-        return repository.findAll();
+    @GetMapping
+    public Iterable<Student> getAll() {
+        return studentService.getAllStudent();
     }
 
-    @PostMapping("/students")
-    public Student saveStudent(@RequestBody Student s) {
-        return repository.save(s);
+    @PostMapping
+    public Student save(@RequestBody Student s) {
+        return studentService.createOrUpdate(s);
     }
 
-    @PutMapping("/students")
-    public Student getAllStudents(@RequestBody Student s) {
-        Optional<Student> student = repository.findById(s.getId());
-        if (student.isPresent()) {
-            return repository.save(s);
-        }
-        return null;
+    @PutMapping
+    public Student update(@RequestBody Student s) {
+        return studentService.createOrUpdate(s);
     }
 
-    @DeleteMapping("/students")
+    @DeleteMapping
     public Iterable<Student> deleteById(@RequestParam(value = "id") Long id) {
-        repository.deleteById(id);
-        return repository.findAll();
+        studentService.deleteById(id);
+        return studentService.getAllStudent();
     }
 
-    @GetMapping("/students/{id}")
+    @GetMapping("/{id}")
     public Optional<Student> getById(@PathVariable(value = "id") Long id) {
-        return repository.findById(id);
+        return studentService.findByStudentId(id);
+    }
+
+    @GetMapping("/email")
+    public Student getByEmail(@RequestParam(value = "email") String email){
+        Student s = studentService.findByEmail(email);
+        return s;
     }
 }

@@ -1,11 +1,10 @@
 package com.kripesh.cms.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@NamedQuery(name = "Student.findByEmailAddress",
+        query = "select s from Student s where s.email = ?1")
 public class Student {
 
     @Id
@@ -14,6 +13,7 @@ public class Student {
     private String firstName;
     private String lastName;
     private String email;
+    private String serialNumber;
 
     protected Student() {}
 
@@ -39,6 +39,10 @@ public class Student {
         return email;
     }
 
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -46,6 +50,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", serialNumber='" + serialNumber + '\'' +
                 '}';
     }
 }
