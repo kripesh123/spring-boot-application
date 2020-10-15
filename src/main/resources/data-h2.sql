@@ -1,0 +1,7 @@
+INSERT INTO students(name, email) VALUES('krishna', 'krishna@gmail.com')
+INSERT INTO students(name, email) VALUES('john', 'john@gmail.com')
+INSERT INTO students(name, email) VALUES('aron', 'aron@gmail.com')
+INSERT INTO students(name, email) VALUES('jessica', 'jessica@gmail.com')
+INSERT INTO students(name, email) VALUES('jay', 'jay@gmail.com')
+INSERT INTO students(name, email) VALUES('ram', 'ram@gmail.com')
+INSERT INTO students(name, email) VALUES('shyam', 'shyam@gmail.com')

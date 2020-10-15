@@ -1,37 +1,15 @@
 package com.kripesh.cms;
-
-import com.kripesh.cms.dao.StudentRepository;
-import com.kripesh.cms.entity.Student;
-import com.kripesh.cms.model.Loan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class CmsApplication {
-
-	@Autowired
-	private Environment env;
-
-	@Autowired
-	@Qualifier("studentLoan")
-	private Loan loan;
-
-	@Autowired
-	@Qualifier("homeLoan")
-	private Loan homeLoan;
 
 	private static final Logger log = LoggerFactory.getLogger(CmsApplication.class);
 
@@ -45,21 +23,9 @@ public class CmsApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(StudentRepository repository) {
+	public CommandLineRunner commandLineRunner() {
 		return args -> {
-			log.info("{}", loan.getInterest());
-			log.info("{}", homeLoan.getInterest());
-//			log.info("{}", env.getProperty("JAVA_HOME"));
-//			log.info("{}", env.getProperty("MAVEN_HOME"));
-//			log.info("{}", env.getProperty("app.name"));
-//			repository.save(new Student("Sagun","Gurung","sagun@gamail.com"));
-//			repository.save(new Student("Kripesh","Bista","kripesh@gamail.com"));
-//			repository.save(new Student("Ram","Gurung","ram@gamail.com"));
-//			repository.save(new Student("Shyam","Dhakal","shyam@gamail.com"));
-//			repository.save(new Student("Krishna","Dahal","Krishna@gamail.com"));
-//
-//			List<Student> students = repository.findByNameEndsWith("am");
-//			log.info(String.valueOf(students));
+
 		};
 	}
 

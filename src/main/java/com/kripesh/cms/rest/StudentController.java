@@ -1,49 +1,35 @@
 package com.kripesh.cms.rest;
 
-import com.kripesh.cms.dao.StudentRepository;
 import com.kripesh.cms.entity.Student;
 import com.kripesh.cms.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
-@RequestMapping("/students")
 public class StudentController {
 
     @Autowired
-    private StudentService studentService;
+    private StudentService service;
 
-    @GetMapping
-    public Iterable<Student> getAll() {
-        return studentService.getAllStudent();
+    @GetMapping("/students")
+    public List<Student> findStudents(){
+       List<Student> students = service.findAll();
+       return students;
     }
 
-    @PostMapping
-    public Student save(@RequestBody Student s) {
-        return studentService.createOrUpdate(s);
-    }
-
-    @PutMapping
-    public Student update(@RequestBody Student s) {
-        return studentService.createOrUpdate(s);
-    }
-
-    @DeleteMapping
-    public Iterable<Student> deleteById(@RequestParam(value = "id") Long id) {
-        studentService.deleteById(id);
-        return studentService.getAllStudent();
-    }
-
-    @GetMapping("/{id}")
-    public Optional<Student> getById(@PathVariable(value = "id") Long id) {
-        return studentService.findByStudentId(id);
-    }
-
-    @GetMapping("/email")
-    public Student getByEmail(@RequestParam(value = "email") String email){
-        Student s = studentService.findByEmail(email);
+    @GetMapping("/students/{studentId}")
+    public Student findStudent(@PathVariable Long studentId){
+        Student s = service.findById(studentId);
         return s;
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<String> noStudentFound(EmptyResultDataAccessException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Student records were found");
     }
 }
